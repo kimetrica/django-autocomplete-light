@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-import six
 from django import forms
 from django.db import models
 from django.db.models.query import QuerySet
@@ -133,7 +130,7 @@ class GenericModelChoiceField(ModelChoiceFieldBase, forms.Field):
         """
         from django.contrib.contenttypes.models import ContentType
 
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             # Apparently there's a bug in django, that causes a python value to
             # be passed here. This ONLY happens when in an inline ....
             return value

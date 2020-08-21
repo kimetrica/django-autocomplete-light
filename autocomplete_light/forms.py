@@ -11,9 +11,7 @@ or use modelform_factory() and expect everything to work out of the box, from
 simple autocompletes to generic many to many autocompletes including a bug fix
 for django bug #9321 or even added security.
 """
-from __future__ import unicode_literals
 
-import six
 from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
@@ -426,8 +424,7 @@ class ModelFormMetaclass(DjangoModelFormMetaclass):
             return meta.autocomplete_registry.default_generic
 
 
-bases = (ModelFormMetaclass,
-        SelectMultipleHelpTextRemovalMixin, VirtualFieldHandlingMixin)
+bases = (SelectMultipleHelpTextRemovalMixin, VirtualFieldHandlingMixin)
 
 if 'genericm2m' in settings.INSTALLED_APPS:
     bases += GenericM2MRelatedObjectDescriptorHandlingMixin,
@@ -435,7 +432,7 @@ if 'genericm2m' in settings.INSTALLED_APPS:
 bases += forms.ModelForm,
 
 
-class ModelForm(six.with_metaclass(*bases)):
+class ModelForm(*bases, metaclass=ModelFormMetaclass):
     """
     ModelForm override using our metaclass that adds our various mixins.
 

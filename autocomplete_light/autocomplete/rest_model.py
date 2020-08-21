@@ -1,6 +1,4 @@
 import urllib
-import six
-
 from django import http
 from django.utils.encoding import force_text
 
@@ -172,7 +170,7 @@ class AutocompleteRestModel(AutocompleteModel):
             model = model_class(**unique_data)
 
         for key, value in data.items():
-            is_string = isinstance(value, six.string_types)
+            is_string = isinstance(value, str)
             field = model_class._meta.get_field_by_name(key)[0]
 
             if getattr(field, 'rel', None) and is_string:

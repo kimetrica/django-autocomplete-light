@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from autocomplete_light.fields import GenericModelChoiceField
-import six
 
 from ..settings import DEFAULT_SEARCH_FIELDS
 from .model import AutocompleteModel
@@ -26,8 +25,10 @@ class AutocompleteGenericMetaClass(type):
         return new_class
 
 
-class AutocompleteGeneric(six.with_metaclass(AutocompleteGenericMetaClass,
-        AutocompleteModel)):
+class AutocompleteGeneric(
+    AutocompleteModel,
+    metaclass=AutocompleteGenericMetaClass
+):
     """
     :py:class:`~.model.AutocompleteModel` extension which considers choices as
     a **list of querysets**, and composes a choice value with both the content
@@ -80,7 +81,7 @@ class AutocompleteGeneric(six.with_metaclass(AutocompleteGenericMetaClass,
         assert self.choices, 'autocomplete.choices should be a queryset list'
 
         for value in self.values:
-            if not isinstance(value, six.string_types):
+            if not isinstance(value, str):
                 return False
 
             try:

@@ -1,9 +1,6 @@
-from __future__ import unicode_literals
-
-import six
-
 from django.db import models
-from .compat import get_model, import_string
+from django.apps import apps
+from django.utils.module_loading import import_string
 
 from .exceptions import (AutocompleteArgNotUnderstood,
                          AutocompleteNotRegistered,
@@ -133,13 +130,13 @@ class AutocompleteRegistry(dict):
         processed_args = []
 
         for arg in args:
-            if isinstance(arg, six.string_types):
+            if isinstance(arg, str):
                 parts = arg.split('.')
                 if len(parts) == 2:
                     # if 'app_name.ModelName'
                     app_label = parts[0]
                     model_name = parts[-1]
-                    model = get_model(app_label=app_label, model_name=model_name)  # noqa
+                    model = apps.get_model(app_label=app_label, model_name=model_name)  # noqa
                     processed_args.append(model)
                 elif len(parts) > 2:
                     # if 'full.path.to.Model'
@@ -248,7 +245,7 @@ class AutocompleteRegistry(dict):
 
     def get_autocomplete_from_arg(self, arg=None):
         from .autocomplete.base import AutocompleteInterface
-        if isinstance(arg, six.string_types):
+        if isinstance(arg, str):
             return self[arg]
         elif isinstance(arg, type) and issubclass(arg, models.Model):
             return self.autocomplete_for_model(arg)

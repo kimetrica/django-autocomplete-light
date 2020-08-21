@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-import six
 from django.db.models import Q
 from django.utils.encoding import force_text
 from django.db import connection
@@ -67,7 +64,7 @@ class AutocompleteModel(object):
         """
         Order choices using :py:attr:`order_by` option if it is set.
         """
-        if isinstance(self.order_by, six.string_types):
+        if isinstance(self.order_by, str):
             self.order_by = (self.order_by,)
 
         if self.values:
@@ -116,7 +113,7 @@ class AutocompleteModel(object):
         """
         assert self.choices is not None, 'choices should be a queryset'
         assert self.search_fields, 'autocomplete.search_fields must be set'
-        assert not isinstance(self.search_fields, six.string_types), \
+        assert not isinstance(self.search_fields, str), \
             'autocomplete.search_fields must not be a string'
         q = self.request.GET.get('q', '')
         exclude = self.request.GET.getlist('exclude')

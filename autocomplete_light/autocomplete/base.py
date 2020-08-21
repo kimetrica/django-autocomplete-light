@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-import six
 from django.urls import reverse, NoReverseMatch
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.encoding import force_text
@@ -46,7 +43,7 @@ class AutocompleteInterface(object):
 
         if values is None:
             self.values = []
-        elif (isinstance(values, six.string_types) or
+        elif (isinstance(values, str) or
                 not hasattr(values, '__iter__')):
             self.values = [values]
         else:
@@ -57,19 +54,19 @@ class AutocompleteInterface(object):
         Return the HTML autocomplete that should be displayed under the text
         input. :py:attr:`request` can be used, if set.
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def validate_values(self):
         """
         Return True if :py:attr:`values` are all valid.
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def choices_for_values(self):
         """
         Return the list of choices corresponding to :py:attr:`values`.
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def get_absolute_url(self):
         """
@@ -161,7 +158,7 @@ class AutocompleteBase(AutocompleteInterface):
         if set, this method is used by
         :py:meth:`~.base.AutocompleteBase.autocomplete_html`.
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def validate_values(self):
         """

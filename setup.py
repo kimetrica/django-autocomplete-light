@@ -54,9 +54,7 @@ setup(
     license='MIT',
     keywords='django autocomplete',
     cmdclass={'test': RunTests},
-    install_requires=[
-        'six',
-    ],
+    install_requires=[],
     extras_require={
         'Tags': 'django-taggit',
         'Generic m2m': 'django-generic-m2m',

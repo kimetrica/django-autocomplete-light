@@ -9,7 +9,6 @@ Note that you still need to register an autocomplete for the Tag model.
     called with commit=True.
 
 """
-import six
 
 from ..fields import FieldBase
 from ..widgets import TextWidget
@@ -25,7 +24,7 @@ except ImportError:
 
 class TaggitWidget(TextWidget):
     def render(self, name, value, attrs=None):
-        if value is not None and not isinstance(value, six.string_types):
+        if value is not None and not isinstance(value, str):
             value = edit_string_for_tags(
                 [o.tag for o in value.select_related("tag")])
         return super(TaggitWidget, self).render(name, value, attrs)
